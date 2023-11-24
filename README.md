@@ -4,7 +4,7 @@
 B300 Computer Engineering Final Project to Control Wheelchair Movement using MediaPipe
 
 Advisor : 
-Dr. Eko Mulyanto Yuniarno, S.T., M.T.
+Dr. Eko Mulyanto Yuniarno, S.T., M.T. \
 State Employee Number : 
 19680601199512 1 009
 
