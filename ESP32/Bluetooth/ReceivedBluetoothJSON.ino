@@ -22,7 +22,7 @@ void loop() {
     } else {
       // Extract values from JSON
       const char* arah = doc["arah"];
-      const char* kecepatan = doc["kecepatan"];
+      int kecepatan = doc["kecepatan"];
 
       // Perform actions based on the received data
       Serial.print("Received Arah: ");
