@@ -12,6 +12,9 @@ import copy
 host = "192.168.4.1" # Set to ESP32 Access Point IP Address
 port = 80
 
+kelasTemp = 'Start'
+print("Global kelasTemp initialized:", kelasTemp)
+
 
 def preprocess_landmarks(landmarks):
     # Flatten the landmark points into a list or an array
@@ -113,6 +116,9 @@ def PredictFaceMesh(NoKamera, LabelKelas):
     PrevIdx = -1  # Define PrevIdx before use
     counter = 0  # Define counter before use
 
+    global kelasTemp
+    print("Inside PredictFaceMesh, kelasTemp is:", kelasTemp)
+
     with mp_face_mesh.FaceMesh(
         max_num_faces=1,
         refine_landmarks=True,
@@ -200,31 +206,40 @@ def PredictFaceMesh(NoKamera, LabelKelas):
                             # Connect to the ESP32 server
                             s.connect((host, port))
 
-                            if LabelKelas[idx]=='Kanan':
-                                arah = 'E\n'
-                                kecepatan = 250
-                                message = f"{arah},{kecepatan}"
-                                s.send(arah.encode('utf-8'))
-                            elif LabelKelas[idx]=='Kiri':
-                                arah = 'A\n'
-                                kecepatan = 250
-                                message = f"{arah},{kecepatan}"
-                                s.send(arah.encode('utf-8'))
-                            elif LabelKelas[idx]=='Maju':
-                                arah = 'B\n'
-                                kecepatan = 250
-                                message = f"{arah},{kecepatan}"
-                                s.send(arah.encode('utf-8'))
-                            elif LabelKelas[idx]=='Mundur':
-                                arah = 'D\n'
-                                kecepatan = 250
-                                message = f"{arah},{kecepatan}"
-                                s.send(arah.encode('utf-8'))
-                            elif LabelKelas[idx]=='Stop':
-                                arah = 'C\n'
-                                kecepatan = 0
-                                message = f"{arah},{kecepatan}"
-                                s.send(arah.encode('utf-8'))
+                            if LabelKelas[idx] == kelasTemp:
+                                pass
+                            else:
+                                if LabelKelas[idx]=='Kanan':
+                                    arah = 'E\n'
+                                    #kecepatan = 250
+                                    #message = f"{arah},{kecepatan}"
+                                    kelasTemp = 'Kanan'
+                                    s.send(arah.encode('utf-8'))
+                                elif LabelKelas[idx]=='Kiri':
+                                    arah = 'A\n'
+                                    #kecepatan = 250
+                                    #message = f"{arah},{kecepatan}"
+                                    kelasTemp = 'Kiri'
+                                    s.send(arah.encode('utf-8'))
+                                elif LabelKelas[idx]=='Maju':
+                                    arah = 'B\n'
+                                    #kecepatan = 250
+                                    #message = f"{arah},{kecepatan}"
+                                    kelasTemp = 'Maju'
+                                    s.send(arah.encode('utf-8'))
+                                elif LabelKelas[idx]=='Mundur':
+                                    arah = 'D\n'
+                                    #kecepatan = 250
+                                    #message = f"{arah},{kecepatan}"
+                                    kelasTemp = 'Mundur'
+                                    s.send(arah.encode('utf-8'))
+                                elif LabelKelas[idx]=='Stop':
+                                    arah = 'C\n'
+                                    #kecepatan = 0
+                                    #message = f"{arah},{kecepatan}"
+                                    kelasTemp = 'Stop'
+                                    s.send(arah.encode('utf-8'))
+
 
                         # Display the black image with landmarks
             cv2.imshow('Black Image with Landmarks', black_image)
